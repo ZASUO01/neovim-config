@@ -4,7 +4,14 @@ local keymap = vim.keymap
 
 -- basic
 keymap.set("i", "jk", "<ESC>", { desc = "Exit Insert Mode With jk." })
-keymap.set("n", "<leader>nh", "nohl", { desc = "Clear Search Highlights." })
+keymap.set("n", "<leader>nh", "<cmd>:nohl<cr>", { desc = "Clear Search Highlights." })
+keymap.set("n", "<leader>rp", function()
+	local word = vim.fn.expand("<cword>")
+	local replacement = vim.fn.input("Replace " .. word .. " by: ")
+	if replacement ~= "" then
+		vim.cmd("%s/" .. word .. "/" .. replacement .. "/gc")
+	end
+end, { desc = "Replace Word." })
 
 -- window split
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split Window Vertically." })
